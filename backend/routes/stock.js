@@ -3,6 +3,6 @@ const router = express.Router();
 const StockController = require("../controllers/stock");
 
 router.post("/registerStock", StockController.RegisterStock);
-router.get("/listStock", StockController.ListStock);
+router.get("/listStock/:name?", StockController.ListStock);
 
 module.exports = router;

@@ -26,7 +26,9 @@ const RegisterStock = async (req, res) => {
 };
 
 const ListStock = async (req, res) => {
-  let stock = await Stock.find()
+  let stock = await Stock.find({
+    name: new RegExp(req.params["name"], "i"),
+  }).exec();
   if (!stock || stock.length === 0)
     return res.status(400).send("Failed: No stocks");
   return res.status(200).send({ stock });

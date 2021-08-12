@@ -3,11 +3,7 @@ const Product = require("../models/product");
 const User = require("../models/user");
 
 const RegisterVenta = async (req, res) => {
-  if (
-    !req.body.nombreproducto ||
-    !req.body.nombreusuario ||
-    !req.body.precio
-  )
+  if (!req.body.nombreproducto || !req.body.nombreusuario || !req.body.precio)
     return res.status(401).send("Process failed: Incomplete data");
 
   const product = await Product.findOne({ name: req.body.nombreproducto });
@@ -30,7 +26,11 @@ const RegisterVenta = async (req, res) => {
 };
 
 const ListVenta = async (req, res) => {
-  let venta = await Venta.find();
+ 
+  let venta = await Venta.find()
+    .populate("idproduct")
+    .populate("iduser")
+    .exec();
   if (!venta || venta.length === 0)
     return res.status(400).send("Failed: No ventas");
   return res.status(200).send({ venta });
